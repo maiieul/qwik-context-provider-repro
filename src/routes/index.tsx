@@ -1,7 +1,12 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import {
+  Child,
+  Parent,
+} from "~/components/button-with-context/button-with-context";
 
 export default component$(() => {
+  const indexCountSig = useSignal(0);
   return (
     <>
       <h1>Hi 👋</h1>
@@ -10,6 +15,18 @@ export default component$(() => {
         <br />
         Happy coding.
       </div>
+
+      <Parent>
+        <Child key={indexCountSig.value} onClick$={() => indexCountSig.value++}>
+          {indexCountSig.value}
+        </Child>
+      </Parent>
+
+      <Parent>
+        <Child onClick$={() => indexCountSig.value++}>
+          {indexCountSig.value}
+        </Child>
+      </Parent>
     </>
   );
 });
